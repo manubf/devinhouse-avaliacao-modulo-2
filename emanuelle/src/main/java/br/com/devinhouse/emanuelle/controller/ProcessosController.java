@@ -27,23 +27,19 @@ public class ProcessosController {
 	@Autowired
 	private ProcessoService service;
 
-	@RequestMapping(headers = "api-version=v1", value = "/v1"
-			+ "/consulta", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(headers = "api-version=v1", value = "/v1" + "/consulta", method = GET, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<ProcessoDTO> recuperarLIstaProcessos() {
 		return service.recuperarProcessos();
 	}
 
-	@RequestMapping(headers = "api-version=v1", value = "/v1"
-			+ "/update/processo/{nuProcesso}", method = PUT, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(headers = "api-version=v1", value = "/v1" + "/update/processo/{nuProcesso}", method = PUT, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ProcessoDTO atualizarInfoProcesso(@PathVariable Integer nuProcesso, @RequestBody ProcessoDTO newProcesso) {
 		return service.atualizarProcesso(nuProcesso, newProcesso);
-
 	}
 
-	@RequestMapping(headers = "api-version=v1", value = "/v1"
-			+ "/consultachave", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(headers = "api-version=v1", value = "/v1" + "/consultachave", method = GET, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<ProcessoDTO> recuperarListaProcessos(@RequestParam String chaveProcesso) {
 		return service.recuperarProcessos(chaveProcesso);
@@ -52,12 +48,11 @@ public class ProcessosController {
 	@RequestMapping(headers = "api-version=v1", value = "/v1"
 			+ "/consultaid", method = GET, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<ProcessoDTO> recuperarListaProcessos(@RequestParam Integer id) {
+	public ProcessoDTO recuperarProcessoId(@RequestParam Integer id) {
 		return service.recuperarProcessos(id);
 	}
 
-	@RequestMapping(headers = "api-version=v1", value = "/v1"
-			+ "/cadastro/processo", consumes = APPLICATION_JSON_VALUE, method = POST, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(headers = "api-version=v1", value = "/v1" + "/cadastro/processo", consumes = APPLICATION_JSON_VALUE, method = POST, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<ProcessoDTO>> cadastrarProcesso(@RequestBody ProcessoDTO processo) {
 		if (service.verificaId(processo)) {
@@ -65,15 +60,12 @@ public class ProcessosController {
 		} else {
 			List<ProcessoDTO> cadastrado = service.cadastrarProcesso(processo);
 			return ResponseEntity.ok(cadastrado);
-
 		}
 	}
 
-	@RequestMapping(headers = "api-version=v1", value = "/v1"
-			+ "/excluir/processo", method = DELETE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(headers = "api-version=v1", value = "/v1"+"/excluir/processo", method = DELETE, produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<ProcessoDTO> exclusaoProcesso(@RequestParam Integer id) {
 		return service.excluirProcesso(id);
 	}
-
 }

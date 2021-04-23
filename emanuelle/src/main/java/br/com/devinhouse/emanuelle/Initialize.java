@@ -25,9 +25,9 @@ public class Initialize implements CommandLineRunner {
 			dto.setId(i + 1);
 			dto.setCdAssunto(i + 1);
 			dto.setCdInteressado(i + 1);
-			dto.setDescricao("Processo " + (i + 1) + "de testes DEV In House ");
+			dto.setDescricao("Processo " + (i + 1) + " de testes DEV In House ");
 			dto.setDescricaoAssunto("Assunto " + (i + 1) + " de testes DEV In House ");
-			dto.setNmInteressado("Jão Antonio ::: " + i);
+			dto.setNmInteressado("João Antonio ::: " + i);
 			dto.setNuAnoProcesso(i <= 20 ? "2020" : "2021");
 			dto.setNuProcesso(i + 1);
 			dto.setSgOrgaoProcesso("SOFT");

@@ -15,13 +15,17 @@ public class ProcessoService {
 
 	@Autowired
 	private ProcessoRepository repository;
+	
+	private List<ProcessoDTO> recuperarListaProcessos() {
+		return repository.findAllProcessos();
+	}
 
 	public List<ProcessoDTO> recuperarProcessos() {
-		return repository.findAllProcessos();
+		return recuperarListaProcessos();
 	}
 	
 	public List<ProcessoDTO> recuperarProcessos(String chaveProcesso){
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 		List<ProcessoDTO> listProcessosFiltradosChave = new ArrayList<ProcessoDTO>();
 		
 		for (ProcessoDTO processoDTO : todosProcessos) {
@@ -32,20 +36,19 @@ public class ProcessoService {
 		return listProcessosFiltradosChave;
 	}
 	
-	public List<ProcessoDTO> recuperarProcessos(Integer id){
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
-		List<ProcessoDTO> listProcessosFiltradosId = new ArrayList<ProcessoDTO>();
+	public ProcessoDTO recuperarProcessos(Integer id){
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 		
 		for (ProcessoDTO processoDTO : todosProcessos) {
 			if (id.equals(processoDTO.getId())) {
-				listProcessosFiltradosId.add(processoDTO);
+				return processoDTO;
 			}
 		}
-		return listProcessosFiltradosId;
+		return null;
 	}
 	
 	public boolean verificaId(ProcessoDTO newprocesso) {
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 			
 		for (ProcessoDTO processoDTO : todosProcessos) {
 			if (processoDTO.getId().equals(newprocesso.getId())) {
@@ -56,10 +59,8 @@ public class ProcessoService {
 		return false;
 	}
 
-//	public List<ProcessoDTO> atualizarProcesso(Integer nuProcesso, ProcessoDTO newProcesso) {
 	public ProcessoDTO atualizarProcesso(Integer nuProcesso, ProcessoDTO newProcesso) {
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
-		//List<ProcessoDTO> processosAlterados = new ArrayList<ProcessoDTO>();
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 		ProcessoDTO processoAlterado = new ProcessoDTO();
 		for (ProcessoDTO processoDTO : todosProcessos) {
 
@@ -82,9 +83,6 @@ public class ProcessoService {
 				if (newProcesso.getDescricaoAssunto() != null) {
 					processoDTO.setDescricaoAssunto(newProcesso.getDescricaoAssunto());
 				}
-				if (newProcesso.getId() != null) {
-					processoDTO.setId(newProcesso.getId());
-				}
 				if (newProcesso.getNmInteressado() != null) {
 					processoDTO.setNmInteressado(newProcesso.getNmInteressado());
 				}
@@ -104,13 +102,13 @@ public class ProcessoService {
 	}
 
 	public List<ProcessoDTO> cadastrarProcesso(ProcessoDTO processo) {
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 		todosProcessos.add(processo);
 		return todosProcessos;
 	}
 
 	public List<ProcessoDTO> excluirProcesso(Integer id) {
-		List<ProcessoDTO> todosProcessos = repository.findAllProcessos();
+		List<ProcessoDTO> todosProcessos = recuperarListaProcessos();
 		int indice = 0;
 				
 		for (ProcessoDTO processoDTO : todosProcessos) {
